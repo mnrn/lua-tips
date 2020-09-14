@@ -30,7 +30,7 @@ end
 ------------------------------------------------------------------------------------
 function new(class, init)
     init = init or { }             -- initがnilならば、initは空テーブルとなる
-    return metatable(init, class)  -- クラスの概念を追加したメタテーブルを返す
+    return setmetatable(init, class)  -- クラスの概念を追加したメタテーブルを返す
 end
 
 
@@ -41,7 +41,7 @@ end
 --! @return xの型
 ------------------------------------------------------------------------------------
 function classof(x)
-    return type(x) == 'table' and metatable(x)
+    return type(x) == 'table' and getmetatable(x)
 end
 
 

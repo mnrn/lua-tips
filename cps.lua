@@ -13,7 +13,7 @@
 --! @return n!
 --------------------------------------------------------------------------------
 function cps_fact(n, cont)
-    if n == 0 then return cont(1) else return cps_factorial(n - 1, function(x) return cont(x * n) end) end
+    if n == 0 then return cont(1) else return cps_fact(n - 1, function(x) return cont(x * n) end) end
 end
 
 
