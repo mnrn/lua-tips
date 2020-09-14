@@ -16,7 +16,7 @@
 function class(t)
     t       = t or { }  -- tがnilならば、tは空テーブルとなる
     t.index = t
-    t.new   = new 
+    t.new   = new
     t.copy  = copy
     return t
 end

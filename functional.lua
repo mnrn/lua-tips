@@ -1,6 +1,7 @@
 --------------------------------------------------------------------------------
 --! @brief Luaにおける高階関数を扱います
 --! @date  2016/06/11
+--! @ref   [お気楽 Lua プログラミング超入門](http://www.nct9.ne.jp/m_hiroi/light/lua.html)
 --------------------------------------------------------------------------------
 
 
@@ -12,7 +13,9 @@
 --------------------------------------------------------------------------------
 function map(fn, lst)
     local a = { }
-    for i = 1, #lst do table.insert(a, fn(lst[i])) end
+    for i = 1, #lst do
+        table.insert(a, fn(lst[i]))
+    end
     return a
 end
 
@@ -26,7 +29,9 @@ end
 function filter(pred, lst)
     local a = { }
     for i = 1, #lst do
-        if pred(lst[i]) then table.insert(a, lst[i]) end
+        if pred(lst[i]) then
+            table.insert(a, lst[i])
+        end
     end
     return a
 end
@@ -35,13 +40,15 @@ end
 --------------------------------------------------------------------------------
 --! @brief 左畳み込みを行います
 --! @param[in] fn   適用関数
+--! @param[in] init アキュムレータの初期値
 --! @param[in] lst  適用対象の配列
---! @param[in] acc0 アキュムレータの初期値
 --! @return  lstの各要素にfnを左側から適用した結果
 --------------------------------------------------------------------------------
-function foldl(fn, lst, acc0)
-    local acc = acc0
-    for i = 1, #lst do acc = fn(acc, lst[i]) end
+function foldl(fn, init, lst)
+    local acc = init
+    for i = 1, #lst do
+        acc = fn(acc, lst[i])
+    end
     return acc
 end
 
@@ -49,13 +56,15 @@ end
 --------------------------------------------------------------------------------
 --! @brief 右畳み込みを行います
 --! @param[in] fn   適応関数
+--! @param[in] init アキュムレータの初期値
 --! @param[in] lst  適応対象の配列
---! @param[in] acc0 アキュムレータの初期値
 --! @return lstの各要素にfnを右側から適用した結果
 --------------------------------------------------------------------------------
-function foldr(fn, lst, acc0)
-    local acc = acc0
-    for i = #lst, 1, -1 do acc = fn(lst[i], acc) end
+function foldr(fn, init, lst)
+    local acc = init
+    for i = #lst, 1, -1 do
+        acc = fn(lst[i], acc)
+    end
     return acc
 end
 
@@ -69,7 +78,9 @@ end
 function curried_map(fn)
     local function map_(lst)
         local a = { }
-        for i = 1, #lst do table.insert(a, fn(lst[i])) end
+        for i = 1, #lst do
+            table.insert(a, fn(lst[i]))
+        end
         return a
     end
     return map_
@@ -84,9 +95,11 @@ end
 function memoizer(fn)
     local memo = { }           --! メモ化テーブル
 
-    local function shell(...)  --! メモ化された関数 
+    local function shell(...)  --! メモ化された関数
         local key = table.concat({...}, ',')
-        if not memo[key] then memo[key] = fn(...) end  -- メモがなければメモる
+        if not memo[key] then  -- メモがなければメモる
+            memo[key] = fn(...)
+        end
         return memo[key]
     end
 

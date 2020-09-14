@@ -1,6 +1,7 @@
 --------------------------------------------------------------------------------
 --! @brief Luaにおける継続渡し(CPS: Coutinuation Passing Style)を扱います
 --! @date  2016/06/11
+--! @ref   [お気楽 Lua プログラミング超入門](http://www.nct9.ne.jp/m_hiroi/light/lua.html)
 --------------------------------------------------------------------------------
 
 
@@ -11,7 +12,7 @@
 --! @param[in] cont 継続関数
 --! @return n!
 --------------------------------------------------------------------------------
-function cps_factorial(n, cont)
+function cps_fact(n, cont)
     if n == 0 then return cont(1) else return cps_factorial(n - 1, function(x) return cont(x * n) end) end
 end
 
